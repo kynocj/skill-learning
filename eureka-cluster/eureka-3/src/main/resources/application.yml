@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: eureka-cluster
+  security:
+    user:
+      password: 123456
+      name: user
+server:
+  port: 1003
+
+eureka:
+  instance:
+    #注册实例名称
+    hostname: eureka-3
+    #是否将自己的ip注册到eureka中，默认是false
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://user:123456@eureka-1:1001/eureka/,http://user:123456@eureka-2:1002/eureka/,http://user:123456@eureka-3:1003/eureka/
+
+logging:
+  config: classpath:logback.xml

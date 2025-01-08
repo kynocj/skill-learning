@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: diana-order
+server:
+  port: 9002
+
+logging:
+  config: classpath:logback.xml
+  level:
+    com.diana: debug
+
+#属性方式配置feign的log级别，用于打印信息
+#feign:
+#  client:
+#    config:
+#      diana-user:
+#        loggerLevel: full
+#        encoder: com.diana.CustomDecoder  #指定自定义decoder
+#      default:  #全局默认设置这个级别的log
+#        loggerLevel: full
+#        contract: feign.Contract.Default #可以代替注解的方式配置契约
+
+#使用apache httpClient请求，而不是httpUrlConnection，
+#只需在pom文件引入依赖即可
+#feign:
+#  httpclient:
+#    #enabled默认也是ture,写不写都行
+#    enabled: true
+#    #最大连接数
+#    max-connections: 200
+#    #feign单个路径的最大连接数 默认是50
+#    max-connections-per-route: 50
+
+#使用的是okhttp，只需要在pom文件中添加依赖即可
+feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    max-connections: 200
+    max-connections-per-route: 50
+
+user:
+  tokenId: 111111111111111111
+
+eureka:
+  client:
+    service-url:
+      # 访问eureka集群
+      # defaultZone: http://eureka-1:1001/eureka/,http://eureka-2:1002/eureka/,http://eureka-3:1003/eureka/
+      # 访问eureka单机
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - shutdown #暴露我们的shutdown端点
+  endpoint:
+    shutdown:
+      enabled: true # 再次确认暴露端点
+
+#属性的配置方式优先级小于类的配置方式
+#diana-user:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+#饥饿加载
+ribbon:
+  eager-load:
+    enabled: true
+    clients:
+      - diana-user

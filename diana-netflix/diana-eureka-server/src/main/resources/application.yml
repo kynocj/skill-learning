@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: diana-eureka-server
+server:
+  port: 8761
+
+eureka:
+  instance:
+    #注册实例名称
+    hostname: localhost
+    #是否将自己的ip注册到eureka中，默认是false
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    #是否拉取其他服务
+    fetch-registry: false
+#  server:
+#    # 关闭自我保护：true为开启自我保护false为关闭自我保护
+#    # 因为网络震荡时，eureka会有一个85%的阈值，假如心跳接收率低于这个阈值，就认为网络不稳定
+#    # 默认是开启状态，这样能在网络不稳定时保护服务60s不被删除，假如报文接收率达到阈值，就不会受保护
+#    # 在90s内没有收到心跳报文就会直接删除服务
+#    enable-self-preservation: false
+#    # 清理时间（单位是毫秒: 默认是 60*1000）
+#    eviction-interval-timer-in-ms: 2000
+
+logging:
+  config: classpath:logback.xml
